@@ -19,9 +19,9 @@ module.exports.getAllPlayers = (req, res, next) => {
 
 module.exports.createPlayer = (req, res, next) => {
 
-    console.log(req.query);
+    console.log(req.body);
 
-    db.none('insert into players(name, surname, dob) values (${name}, ${surname}, ${dob})', req.query)
+    db.none('insert into players(player_name, player_surname) values (${player_name}, ${player_surname})', req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -56,10 +56,10 @@ module.exports.getSinglePlayer = (req, res, next) => {
 
 module.exports.updatePlayer = (req, res, next) => {
 
-    console.log(req.query);
+    console.log(req.body);
 
-    db.none('update players set name=$1, surname=$2, dob=$3 where id=$4',
-    [req.query.name, req.query.surname, req.query.dob, parseInt(req.params.id)])
+    db.none('update players set player_name=$1, player_surname=$2 where pid = $3',
+    [req.body.player_name, req.body.player_surname, parseInt(req.params.id)])
     .then(function () {
       res.status(200)
         .json({
